@@ -1,0 +1,20 @@
+﻿{
+  "version": "1.0.1-*",
+  "description": "ACs.NHibernate.Next Class Library",
+  "authors": [ "Borela" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "ACs.NHibernate.Generic": "1.0.0-*",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+  },
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "ACs.NHibernate": "1.0.0-*"
+      }
+    }
+  }
+}

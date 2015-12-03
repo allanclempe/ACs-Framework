@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.1-*",
+  "description": "ACs.NHibernate.Mvc Class Library",
+  "authors": [ "Borela" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        
+      },
+      "frameworkAssemblies": {
+        "System.Web": "4.0.0.0",
+        "System.Runtime": "4.0.10.0"
+      }
+    }
+  },
+  "dependencies": {
+    "ACs.NHibernate": "1.0.0-*",
+    "ACs.NHibernate.Generic": "1.0.0-*",
+    "Microsoft.AspNet.Mvc": "5.2.3",
+    "Unity": "4.0.1"
+  }
+}

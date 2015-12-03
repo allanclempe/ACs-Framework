@@ -1,0 +1,28 @@
+﻿{
+  "version": "1.0.1-*",
+  "description": "ACs.NHibernate Class Library",
+  "authors": [ "Borela" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "NHibernate": "4.0.4.4000",
+    "FluentNHibernate": "2.0.3",
+    "ACs.NHibernate.Generic": "1.0.0-*"
+  },
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        
+      },
+      "frameworkAssemblies": {
+        "Microsoft.CSharp": "4.0.0.0",
+        "System.Data": "4.0.0.0",
+        "System.Linq.Expressions": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Reflection": "4.0.0.0"
+      }
+    }
+  }
+}
