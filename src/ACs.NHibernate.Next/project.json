@@ -1,7 +1,7 @@
 ﻿{
   "version": "1.0.1-*",
   "description": "ACs.NHibernate.Next Class Library",
-  "authors": [ "Borela" ],
+  "authors": [ "Allan Clempe" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
@@ -13,7 +13,7 @@
   "frameworks": {
     "net451": {
       "dependencies": {
-        "ACs.NHibernate": "1.0.0-*"
+        "ACs.NHibernate": ""
       }
     }
   }

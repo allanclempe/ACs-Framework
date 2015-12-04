@@ -1,7 +1,7 @@
 ﻿{
-  "version": "1.0.1-*",
+  "version": "1.0.2-*",
   "description": "ACs.NHibernate Class Library",
-  "authors": [ "Borela" ],
+  "authors": [ "Allan Clempe" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
@@ -9,7 +9,7 @@
   "dependencies": {
     "NHibernate": "4.0.4.4000",
     "FluentNHibernate": "2.0.3",
-    "ACs.NHibernate.Generic": "1.0.0-*"
+    "ACs.NHibernate.Generic": ""
   },
   "frameworks": {
     "net451": {

@@ -12,7 +12,7 @@ namespace ACs.NHibernate
             _factory = factory;
         }
 
-        public virtual T GetById(long id)
+        public virtual T GetById(int id)
         {
             return (from q in _factory.Session.Query<T>()
                 where q.Id == id
