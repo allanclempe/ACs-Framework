@@ -38,7 +38,8 @@ namespace ACs.NHibernate.Mvc
 
         public void OnException(ExceptionContext context)
         {
-            _request.Finish(true);
+            if (_request != null)
+                _request.Finish(true);
 
             throw context.Exception;
         }
