@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Http;
 
 namespace ACs.NHibernate.Next
 {
-    public class HttpContextHelper
+    public static class HttpContextHelper
     {
-        private static IHttpContextAccessor _httpContextAccessor;
-        public static void Configure(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
-        }
 
+        private static IHttpContextAccessor _httpContextAccessor;
+        public static IApplicationBuilder UseStaticContext(this IApplicationBuilder builder)
+        {
+            _httpContextAccessor = (IHttpContextAccessor)builder.ApplicationServices.GetService(typeof(IHttpContextAccessor));
+            return builder;
+
+        }
         public static HttpContext Current => _httpContextAccessor.HttpContext;
     }
 }
