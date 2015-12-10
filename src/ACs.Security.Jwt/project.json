@@ -1,0 +1,16 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ACs.Security.Jwt Class Library",
+  "authors": [ "Allan Clempe" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "System.IdentityModel.Tokens": "5.0.0-rc1-211161024",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0-rc1-211161024"
+  },
+  "frameworks": {
+    "net451": { }
+  }
+}

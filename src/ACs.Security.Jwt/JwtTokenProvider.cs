@@ -1,0 +1,69 @@
+﻿using System;
+using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+
+namespace ACs.Security.Jwt
+{
+    public class JwtTokenProvider : IJwtTokenProvider
+    {
+        private readonly IJwtTokenConfiguration _config;
+        private JwtSecurityTokenHandler _handler;
+        private RsaSecurityKey _key;
+        private RSACryptoServiceProvider _provider;
+
+        public JwtTokenProvider(IJwtTokenConfiguration config)
+        {
+            _config = config;
+        }
+
+        public string Audience {  get { return _config.Audience; } }
+        public string Issuer { get { return _config.Issuer; } }
+
+        public JwtSecurityTokenHandler Handler {
+            get
+            {
+                return _handler ?? (_handler = new JwtSecurityTokenHandler());
+            }
+        }
+
+        public RSACryptoServiceProvider Provider {
+            get
+            {
+                if (_provider != null)
+                    return _provider;
+
+                _provider = new RSACryptoServiceProvider();
+                _provider.FromXmlString(_config.CertXml);
+                return _provider;
+
+            }
+        }
+
+        public RsaSecurityKey Key {
+            get
+            {
+                return _key ?? (_key = new RsaSecurityKey(Provider.ExportParameters(true)));
+            }
+        }
+
+        public string GetToken(DateTime? expiress = null, params Claim[] claims)
+        {
+            return Handler.WriteToken(new JwtSecurityToken(
+               issuer: _config.Issuer,
+               audience: _config.Audience,
+               signingCredentials: new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature),
+               expires: expiress,
+               claims: claims               
+           ));
+        }
+
+        public static string GenerateCert256Xml()
+        {
+            var myRSA = new RSACryptoServiceProvider(2048);
+            myRSA.ExportParameters(true);
+            return myRSA.ToXmlString(includePrivateParameters: true);
+        }
+    }
+}
