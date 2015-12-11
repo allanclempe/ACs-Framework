@@ -8,26 +8,26 @@ namespace ACs.NHibernate.Mvc
     
     public class SessionRequiredAttribute : ActionFilterAttribute, IExceptionFilter
     {
-        private readonly bool _openTransaction;
-        private readonly bool _verifyModelStateError;
+        public bool OpenTransaction { get; set; }
+        public bool ModelStateErrorChecker { get; set; }
         private IDatabaseRequest _request;
 
-        public SessionRequiredAttribute(bool openTransaction = true, bool verifyModelStateError = true)
+        public SessionRequiredAttribute()
         {
-            _openTransaction = openTransaction;
-            _verifyModelStateError = verifyModelStateError;
+            OpenTransaction = true;
+            ModelStateErrorChecker = true;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var factory = (IDatabaseSession)UnityContainerHelper.Container.Resolve(typeof (IDatabaseSession));
+            var factory = (IDatabaseFactory)UnityContainerHelper.Container.Resolve(typeof (IDatabaseFactory));
 
-            _request = factory.BeginRequest(_openTransaction);
+            _request = factory.BeginRequest(OpenTransaction);
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            if (filterContext.Exception != null || (_verifyModelStateError && filterContext.Controller.ViewData.ModelState.Values.SelectMany(x => x.Errors).Any(x => !string.IsNullOrEmpty(x.ErrorMessage))))
+            if (filterContext.Exception != null || (ModelStateErrorChecker && filterContext.Controller.ViewData.ModelState.Values.SelectMany(x => x.Errors).Any(x => !string.IsNullOrEmpty(x.ErrorMessage))))
             {
                 _request.Finish(true); 
                 return;

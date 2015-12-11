@@ -7,11 +7,12 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
 using ACs.NHibernate.Generic;
+using System.Linq;
 
 
 namespace ACs.NHibernate
 {
-    public class DatabaseFactory : IDatabaseSession
+    public class DatabaseFactory : IDatabaseFactory, IDisposable
     {
         private readonly IDictionary<string, string> _configuration;
         private static ISessionFactory _sessionFactory;
@@ -25,24 +26,44 @@ namespace ACs.NHibernate
         {
             _configuration = configuration;
         }
-
-
-        public ISession Session => GetSession();
         
         public virtual IDatabaseRequest BeginRequest(bool beginTransaction = true)
         {
             if (_sessionFactory == null)
                 _sessionFactory = GetConfiguration();
 
-            return new DatabaseRequest(_sessionFactory)
+            ISession session = Session;
+
+            if (session == null)
+            {
+                session = _sessionFactory.OpenSession();
+                CurrentSessionContext.Bind(session);
+            }
+
+            return new DatabaseRequest(session)
                 .Open(beginTransaction);
         }
 
-        public static IDatabaseRequest GetRequest()
+        public virtual void End()
         {
-            return new DatabaseRequest(_sessionFactory);
+
+            if (Session == null)
+                return;
+
+            var session = Session;
+
+            CurrentSessionContext.Unbind(_sessionFactory);
+
+            if (session.IsConnected)
+                session.Disconnect();
+
+            if (session.IsOpen)
+                session.Close();
+
+            session.Dispose();
         }
 
+        public ISession Session => GetSession();
         public static ISession GetSession()
         {
             return !CurrentSessionContext.HasBind(_sessionFactory) ? null : _sessionFactory.GetCurrentSession();
@@ -70,6 +91,9 @@ namespace ACs.NHibernate
                 .BuildSessionFactory();
         }
 
-
+        public void Dispose()
+        {
+            End();
+        }
     }
 }

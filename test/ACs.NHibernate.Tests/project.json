@@ -8,14 +8,30 @@
 
   "dependencies": {
     "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204"
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
+    "NHibernate": "4.0.4.4000",
+    "FluentNHibernate": "2.0.3",
+    "ACs.NHibernate.Generic": "",
+    "ACs.NHibernate": "",
+    "ACs.NHibernate.Next": "",
+    "Microsoft.AspNet.Http": "1.0.0-rc1-final"
+
   },
   "commands": {
     "test": "xunit.runner.dnx"
   },
 
   "frameworks" : {
-    "dnx451": {}
+    "dnx451": {
+      "dependencies": { "Moq": "4.2.1312.1622" },
+      "frameworkAssemblies": {
+        "Microsoft.CSharp": "4.0.0.0",
+        "System.Data": "4.0.0.0",
+        "System.Linq.Expressions": "4.0.0.0",
+        "System.Collections": "4.0.0.0",
+        "System.Reflection": "4.0.0.0"
+      }
+    }
     }
  
 }

@@ -13,7 +13,7 @@ public IServiceProvider ConfigureServices(IServiceCollection services)
 {
     //...
     var cfg = Fluently.Configure()
-                    .CurrentSessionContext<AspNetvNextWebSessionContext>();
+                    .CurrentSessionContext<Web5SessionContext>();
 
     /*add your database configuration. 
     cfg.Database(MsSqlConfiguration.MsSql2012.ConnectionString("yourconnectionstring")

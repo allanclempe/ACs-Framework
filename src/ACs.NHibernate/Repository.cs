@@ -6,8 +6,8 @@ namespace ACs.NHibernate
 {
     public abstract class Repository<T> : IRepository<T> where T : IEntityRoot, IEntityId
     {
-        protected readonly IDatabaseSession _factory;
-        protected Repository(IDatabaseSession factory)
+        protected readonly IDatabaseFactory _factory;
+        protected Repository(IDatabaseFactory factory)
         {
             _factory = factory;
         }

@@ -19,8 +19,7 @@ namespace ACs.NHibernate.Next
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-
-            var factory = (IDatabaseSession)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseSession));
+            var factory = (IDatabaseFactory)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseFactory));
 
             _request = factory.BeginRequest(OpenTransaction);
         }

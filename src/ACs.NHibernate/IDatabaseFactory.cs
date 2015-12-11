@@ -1,8 +1,13 @@
 ﻿
-namespace ACs.NHibernate.Generic
+using NHibernate;
+using ACs.NHibernate.Generic;
+
+namespace ACs.NHibernate
 {
     public interface IDatabaseFactory 
     {
+        ISession Session { get; }
         IDatabaseRequest BeginRequest(bool beginTransaction = true);
+        void End();
     }
 }

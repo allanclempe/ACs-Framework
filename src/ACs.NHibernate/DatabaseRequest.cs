@@ -7,76 +7,60 @@ namespace ACs.NHibernate
 {
     public class DatabaseRequest : IDatabaseRequest
     {
-        private readonly ISessionFactory _sessionFactory;
+        private readonly ISession _session;
 
-        public DatabaseRequest(ISessionFactory sessionFactory)
+        public DatabaseRequest(ISession session)
         {
-            _sessionFactory = sessionFactory;
+            _session = session;
         }
 
         internal virtual IDatabaseRequest Open(bool beginTransaction = true)
         {
-            ISession session = _sessionFactory.OpenSession();
-
-            if (beginTransaction) session.BeginTransaction();
-
-            CurrentSessionContext.Bind(session);
-
+            if (beginTransaction) _session.BeginTransaction();
+            
             return this;
 
         }
 
         public void BeginTransaction()
         {
-            _sessionFactory.GetCurrentSession().Transaction.Begin();
+            _session.Transaction.Begin();
         }
 
         public virtual void CommitTransaction()
         {
-            _sessionFactory.GetCurrentSession().Transaction.Commit();
+            _session.Transaction.Commit();
         }
 
         public virtual void RollbackTransaction()
         {
-            _sessionFactory.GetCurrentSession().Transaction.Rollback();
+            _session.Transaction.Rollback();
         }
 
         public virtual void Finish(bool forceRollback = false)
         {
-
-            if (!CurrentSessionContext.HasBind(_sessionFactory))
-                return;
-
-            var session = CurrentSessionContext.Unbind(_sessionFactory);
-
-            if (session == null) return;
+            if (_session == null) return;
 
             try
             {
-                if (!session.Transaction.IsActive) return;
+                if (!_session.Transaction.IsActive) return;
 
                 if (forceRollback)
                 {
-                    session.Transaction.Rollback();
+                    _session.Transaction.Rollback();
                     return;
                 }
 
-                session.Transaction.Commit();
+                _session.Transaction.Commit();
+
             }
             catch (Exception)
             {
-                if (session.IsOpen && session.Transaction.IsActive)
-                    session.Transaction.Rollback();
+                if (_session.IsOpen && _session.Transaction.IsActive)
+                    _session.Transaction.Rollback();
 
                 throw;
             }
-            finally
-            {
-                if (session.IsOpen)
-                    session.Close();
-
-                session.Dispose();
-            }            
         }
 
 

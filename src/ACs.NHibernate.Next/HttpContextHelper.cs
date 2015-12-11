@@ -9,10 +9,15 @@ namespace ACs.NHibernate.Next
         private static IHttpContextAccessor _httpContextAccessor;
         public static IApplicationBuilder UseStaticContext(this IApplicationBuilder builder)
         {
-            _httpContextAccessor = (IHttpContextAccessor)builder.ApplicationServices.GetService(typeof(IHttpContextAccessor));
+            UseStaticContext((IHttpContextAccessor)builder.ApplicationServices.GetService(typeof(IHttpContextAccessor)));
             return builder;
 
         }
+        public static void UseStaticContext(IHttpContextAccessor builder)
+        {
+            _httpContextAccessor = builder;
+        }
+
         public static HttpContext Current => _httpContextAccessor.HttpContext;
     }
 }
