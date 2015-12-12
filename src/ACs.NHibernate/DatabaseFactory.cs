@@ -14,7 +14,6 @@ namespace ACs.NHibernate
 {
     public class DatabaseFactory : IDatabaseFactory, IDisposable
     {
-        private readonly IDictionary<string, string> _configuration;
         private static ISessionFactory _sessionFactory;
 
         public DatabaseFactory(ISessionFactory sessionFactory)
@@ -22,16 +21,8 @@ namespace ACs.NHibernate
             _sessionFactory = sessionFactory;
         }
 
-        public DatabaseFactory(IDictionary<string, string> configuration)
-        {
-            _configuration = configuration;
-        }
-        
         public virtual IDatabaseRequest BeginRequest(bool beginTransaction = true)
         {
-            if (_sessionFactory == null)
-                _sessionFactory = GetConfiguration();
-
             ISession session = Session;
 
             if (session == null)
@@ -46,7 +37,6 @@ namespace ACs.NHibernate
 
         public virtual void End()
         {
-
             if (Session == null)
                 return;
 
@@ -69,7 +59,8 @@ namespace ACs.NHibernate
             return !CurrentSessionContext.HasBind(_sessionFactory) ? null : _sessionFactory.GetCurrentSession();
         }
 
-        protected Assembly GetAssembly(string name)
+        #region | Configuration Helper
+        private static Assembly GetAssembly(string name)
         {
             var type = Type.GetType(name);
 
@@ -81,15 +72,14 @@ namespace ACs.NHibernate
 
         }
 
-        protected Assembly MapAssembly => GetAssembly(_configuration["mappingfluent"]);
-
-        protected virtual ISessionFactory GetConfiguration()
+        public static ISessionFactory BuildSessionFactory(IDictionary<string, string> configuration)
         {
-            return Fluently.Configure(new Configuration().AddProperties(_configuration))
-                .Mappings(m => m.FluentMappings.AddFromAssembly(MapAssembly)
+            return Fluently.Configure(new Configuration().AddProperties(configuration))
+                .Mappings(m => m.FluentMappings.AddFromAssembly(GetAssembly(configuration["mappingfluent"]))
                     .Conventions.Add(DefaultLazy.Always()))
                 .BuildSessionFactory();
         }
+        #endregion
 
         public void Dispose()
         {

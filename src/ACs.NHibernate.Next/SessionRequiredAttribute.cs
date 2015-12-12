@@ -10,6 +10,7 @@ namespace ACs.NHibernate.Next
         public bool OpenTransaction { get; set; }
         public bool ModelStateErrorChecker { get; set; }
         private IDatabaseRequest _request;
+        private IDatabaseFactory _factory;
 
         public SessionRequiredAttribute()
         {
@@ -19,9 +20,9 @@ namespace ACs.NHibernate.Next
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var factory = (IDatabaseFactory)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseFactory));
+            _factory = (IDatabaseFactory)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseFactory));
 
-            _request = factory.BeginRequest(OpenTransaction);
+            _request = _factory.BeginRequest(OpenTransaction);
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
