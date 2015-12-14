@@ -48,12 +48,14 @@ namespace ACs.Security.Jwt
             }
         }
 
-        public string GetToken(DateTime? expiress = null, params Claim[] claims)
+        public string GetToken(DateTime? notBefore = null, DateTime? expiress = null, params Claim[] claims )
         {
+            
             return Handler.WriteToken(new JwtSecurityToken(
                issuer: _config.Issuer,
                audience: _config.Audience,
                signingCredentials: new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature),
+               notBefore: notBefore,
                expires: expiress,
                claims: claims               
            ));

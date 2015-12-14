@@ -13,6 +13,6 @@ namespace ACs.Security.Jwt
         RsaSecurityKey Key { get; }
         string Audience { get; }
         string Issuer { get; }
-        string GetToken(DateTime? expiress = null, params Claim[] claims);
+        string GetToken(DateTime? notBefore = null, DateTime? expiress = null, params Claim[] claims);
     }
 }
