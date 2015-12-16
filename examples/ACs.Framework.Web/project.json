@@ -14,11 +14,13 @@
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
     "NHibernate": "4.0.4.4000",
     "FluentNHibernate": "2.0.3",
     "ACs.NHibernate": "",
     "ACs.NHibernate.Next": "",
-    "ACs.NHibernate.Generic": ""
+    "ACs.NHibernate.Generic": "",
+    "ACs.Angular.Next": ""
   },
 
   "commands": {

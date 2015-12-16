@@ -25,6 +25,12 @@ namespace ACs.Framework.Web.Controllers
             return _fooRepository.GetAll();
         }
 
+        [HttpGet("notfound")]
+        public IActionResult NotFound()
+        {
+            return HttpNotFound();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public string Get(int id)

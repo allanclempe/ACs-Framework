@@ -17,6 +17,7 @@ using ACs.Framework.Web.Core;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Driver;
 using NHibernate;
+using ACs.Angular.Next;
 
 
 namespace ACs.Framework.Web
@@ -60,11 +61,19 @@ namespace ACs.Framework.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseIISPlatformHandler();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
-            app.UseStaticFiles();
 
-            app.UseMvc()
+
+            //app.UseStaticFiles();
+
+            app
+                .UseIISPlatformHandler()
+                .UseMvc()
+                .UseAngularServer("wwwroot", "/index.html")
                 .UseStaticContext();
         }
 
