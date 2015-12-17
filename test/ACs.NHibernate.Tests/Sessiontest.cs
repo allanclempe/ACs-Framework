@@ -40,15 +40,10 @@ namespace ACs.NHibernate.Tests
         }
 
         [Fact]
-        public void MultipleRequest()
+        public void BeginRequest()
         {
             using (var req1 = _factory.BeginRequest()) {
-                using (var req2 = _factory.BeginRequest())  {
-
-                    //logic2;
-                    req2.CommitTransaction();
-                }
-                
+              
                 //another logic.
                 req1.CommitTransaction();
             }

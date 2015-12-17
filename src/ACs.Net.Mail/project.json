@@ -1,0 +1,15 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ACs.Net.Mail Class Library",
+  "authors": [ "Borela" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "HtmlAgilityPack": "1.4.9"
+  },
+  "frameworks": {
+    "net451": { }
+  }
+}
