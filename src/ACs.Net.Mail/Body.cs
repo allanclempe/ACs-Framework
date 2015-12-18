@@ -8,15 +8,12 @@ namespace ACs.Net.Mail
 {
     public class Body: IBody
     {    
-        private const string _templateDefault = "<html><head></head><body></body>";
+        private const string _templateDefault = "<!DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html><head></head><body></body></html>";
         private readonly KeyValuePair<TemplateType, string> _templateBody;
         private IDictionary<string, object> _params;
         private string _fontFamily = "Verdana";
         private int _fontSize = 11;
-        private IDictionary<string, string> _plainTextReplacement = new Dictionary<string, string> {
-            {"\r", "<br>" }
-        };
-
+        
 
         public Body(string template, TemplateType type)
         {
@@ -55,30 +52,6 @@ namespace ACs.Net.Mail
             return this;
         }
 
-        private string SetPlainText(string template)
-        {
-            foreach (var replace in _plainTextReplacement)
-                template = template.Replace(replace.Key, replace.Value);
-
-            return template;
-        }
-
-        private string SetParameters(string template)
-        {
-            foreach (var replace in _params)
-            {
-                var toValue = string.Empty;
-                if (replace.Value.GetType() == typeof(Uri))
-                    toValue = string.Format("<a href=\"{0}\" target=\"blank\">{0}</a>", ((Uri)replace.Value).ToString());
-                else
-                    toValue = replace.ToString();
-
-                template = template.Replace("{{" + replace.Key + "}}", toValue);
-            }
-
-            return template;
-        }
-
         public string ToHtml()
         {
             var documentBody = new HtmlDocument();
@@ -87,9 +60,9 @@ namespace ACs.Net.Mail
             var mainDiv = HtmlNode.CreateNode("<div></div>");
             
             if (_templateBody.Key == TemplateType.PlainText)
-                template = SetPlainText(template);
+                template = BodyFormater.Replace(template);
 
-            template = SetParameters(template);
+            template = BodyParameter.Replace(template, _params);
 
             mainDiv.Attributes.Add("style", string.Format("font-family:{0};font-size:{1}px", _fontFamily, _fontSize));
             mainDiv.AppendChild(HtmlNode.CreateNode(string.Format("<div>{0}</div>", template)));

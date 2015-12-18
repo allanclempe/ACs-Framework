@@ -1,6 +1,6 @@
-﻿namespace Portal.Core.Infraestrutura
+﻿namespace ACs.Net.Mail
 {
-    public interface IEmailConfiguration
+    public interface ISmptConfiguration
     {
         string FromAddress { get; }
         string Smtp { get; }
