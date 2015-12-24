@@ -1,30 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Mail;
-
+using System.Net;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace ACs.Net.Mail
 {
     public class MessageSender : IMessageSender
     {
-        private readonly ISmptConfiguration _smtpConfiguration;
-        public MessageSender(ISmptConfiguration smtpConfiguration)
+        private readonly ISmtpConfiguration _smtpConfiguration;
+        private readonly ILogger _logger;
+
+        public MessageSender(ISmtpConfiguration smtpConfiguration)
         {
             _smtpConfiguration = smtpConfiguration;
         }
 
-        public Task SendEmailAsync(string email, string subject, IBody body)
+        public MessageSender(ISmtpConfiguration smtpConfiguration, ILogger<MessageSender> logger)
+            :this(smtpConfiguration)
+        {
+            _logger = logger;
+        }
+
+        public virtual Task<bool> SendEmailAsync(IHtmlMessage body)
+        {
+            return SendEmailAsync(body.MailTo, body.Subject, body.ToHtml());
+        }
+
+        public virtual Task<bool> SendEmailAsync(string email, string subject, IHtmlMessage body)
         {
             return SendEmailAsync(email, subject, body.ToHtml());
         }
 
-        public Task SendEmailAsync(string email, string subject, string message)
+        public virtual Task<bool> SendEmailAsync(string email, string subject, string message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            if (!_smtpConfiguration.Activated)
+                return Task.FromResult(false);
+
+            try
+            {
+                if (string.IsNullOrEmpty(email))
+                    throw new ArgumentException(nameof(email));
+
+                if (string.IsNullOrEmpty(subject))
+                    throw new ArgumentException(nameof(subject));
+
+                if (string.IsNullOrEmpty(message))
+                    throw new ArgumentException(nameof(message));
+
+                var smtp = new SmtpClient(_smtpConfiguration.Server, _smtpConfiguration.Port)
+                {
+                    EnableSsl = _smtpConfiguration.UseSSL,
+                    Timeout = _smtpConfiguration.Timeout
+                };
+
+                if (!string.IsNullOrEmpty(_smtpConfiguration.UserName))
+                    smtp.Credentials = new NetworkCredential(_smtpConfiguration.UserName, _smtpConfiguration.Password);
+
+                var mail = new MailMessage
+                {
+                    From = new MailAddress(_smtpConfiguration.From),
+                    Subject = subject,
+                    IsBodyHtml = true,
+                    Body = message
+                };
+
+                var emails = email + ";";
+                foreach(var to in emails.Split(';').Where(x=>!string.IsNullOrEmpty(x)))
+                    mail.To.Add(new MailAddress(to));
+                
+                smtp.Send(mail);
+            }
+            catch (Exception e)
+            {
+                if (_logger != null)
+                    _logger.LogError("Message cannot be delivered.", e);
+
+                return Task.FromResult(false);
+            }
+            
+            return Task.FromResult(true);
         }
+
+    
 
     }
 }

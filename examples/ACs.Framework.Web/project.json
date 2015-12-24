@@ -1,5 +1,6 @@
 ﻿{
   "version": "1.0.0-*",
+  "userSecretsId": "ACs-Framework-Example",
   "compilationOptions": {
     "emitEntryPoint": true
   },
@@ -15,16 +16,22 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
+    "Microsoft.Extensions.SecretManager": "1.0.0-rc1-final",
     "NHibernate": "4.0.4.4000",
     "FluentNHibernate": "2.0.3",
     "ACs.NHibernate": "",
     "ACs.NHibernate.Next": "",
     "ACs.NHibernate.Generic": "",
-    "ACs.Angular.Next": ""
+    "ACs.Angular.Next": "",
+    "ACs.Net.Mail": "",
+    "FluentMigrator": "1.6.1",
+    "FluentMigrator.Runner.DNX": "1.0.0-*"
   },
 
+
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
+    "web": "Microsoft.AspNet.Server.Kestrel",
+    "migrate": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
 
   "frameworks": {

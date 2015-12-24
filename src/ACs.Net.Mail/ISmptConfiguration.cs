@@ -1,14 +1,15 @@
 ﻿namespace ACs.Net.Mail
 {
-    public interface ISmptConfiguration
+    public interface ISmtpConfiguration
     {
-        string FromAddress { get; }
-        string Smtp { get; }
+        string From { get; }
+        string Server { get; }
         int Port { get; }
         string UserName { get; }
         string Password { get; }
         bool UseSSL { get; }
         bool Activated { get; }
+        int Timeout { get; }
     }
 
    

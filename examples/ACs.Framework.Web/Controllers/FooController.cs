@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using ACs.Framework.Web.Data;
 using ACs.Framework.Web.Core;
 using ACs.NHibernate.Next;
+using ACs.Net.Mail;
 
 namespace ACs.Framework.Web.Controllers
 {
@@ -13,8 +14,11 @@ namespace ACs.Framework.Web.Controllers
     public class FooController : Controller
     {
         private readonly IFooRepository _fooRepository;
-        public FooController(IFooRepository fooRepository)
+        private readonly IMessageSender _messageSender;
+
+        public FooController(IFooRepository fooRepository, IMessageSender messageSender)
         {
+            _messageSender = messageSender;
             _fooRepository = fooRepository;
         }
 
@@ -40,8 +44,15 @@ namespace ACs.Framework.Web.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async void Post([FromBody]Foo foo)
         {
+            _fooRepository.Save(foo);
+
+            await _messageSender.SendEmailAsync(foo.Email, "Activate your account",
+                new HtmlMessage("Hello <param name=\"name\" />, <br>To Activate your account please use link bellow<br><br> <param name=\"url\" /><br><br>Regards")
+                .SetParams(new { name = foo.Name, url = new Uri("http://somedomain.com/link-to-activate") })
+                .ToHtml());
+
         }
 
         // PUT api/values/5

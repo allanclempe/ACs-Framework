@@ -18,7 +18,8 @@ using FluentNHibernate.Cfg.Db;
 using NHibernate.Driver;
 using NHibernate;
 using ACs.Angular.Next;
-
+using ACs.Net.Mail;
+using ACs.Framework.Web.Infra;
 
 namespace ACs.Framework.Web
 {
@@ -29,7 +30,8 @@ namespace ACs.Framework.Web
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .AddUserSecrets();
             Configuration = builder.Build();
         }
 
@@ -49,7 +51,8 @@ namespace ACs.Framework.Web
 
             services.AddScoped<IDatabaseFactory, DatabaseFactory>();
             services.AddScoped<IFooRepository, FooRepository>();
-
+            services.AddSingleton<ISmtpConfiguration>(x=> Configuration.Get<SmtpConfiguration>("Smtp"));
+            services.AddSingleton<IMessageSender, MessageSender>();
 
             // Add framework services.
             services.AddMvc();
