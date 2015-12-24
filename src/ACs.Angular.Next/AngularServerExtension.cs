@@ -20,7 +20,12 @@ namespace ACs.Angular.Next
             var logger  = (ILoggerFactory)builder.ApplicationServices.GetService(typeof(ILoggerFactory));
             var env = (IHostingEnvironment)builder.ApplicationServices.GetService(typeof(IHostingEnvironment));
 
-            var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), rootPath));
+            var dir = Directory.GetCurrentDirectory();
+
+            if (dir.IndexOf(rootPath, StringComparison.CurrentCultureIgnoreCase) == -1)
+                dir = Path.Combine(dir, rootPath);
+
+            var fileProvider = new PhysicalFileProvider(dir);
 
             var options = new AngularServerOptions {
                 FileServerOptions = new FileServerOptions()
