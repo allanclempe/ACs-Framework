@@ -31,7 +31,8 @@
 
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel",
-    "migrate": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true --output migrator.sql"
+    "migrate": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true --output migrator.sql",
+    "migrate-down": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true --output migrator-down.sql --task migrate:down"
   },
 
   "frameworks": {
