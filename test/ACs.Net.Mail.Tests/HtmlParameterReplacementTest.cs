@@ -52,7 +52,7 @@ namespace ACs.Net.Mail.Tests
             var userName = "User Test";
             var result = HtmlParameterReplacement.Replace(template, "name", userName);
 
-            Assert.Equal(string.Format("<div>Your name is <span>{0}</span>.</div>", userName), result.DocumentNode.OuterHtml);
+            Assert.Equal($"<div>Your name is <span>{userName}</span>.</div>", result.DocumentNode.OuterHtml);
         }
 
         [Fact]
@@ -67,9 +67,25 @@ namespace ACs.Net.Mail.Tests
                 { "name", userName }
             });
             
-            Assert.Equal(string.Format("<div>Your name is <span>{0}</span>.</div>", userName), result.DocumentNode.OuterHtml);
+            Assert.Equal($"<div>Your name is <span>{userName}</span>.</div>", result.DocumentNode.OuterHtml);
         }
 
-        
+
+
+        [Fact]
+        public void NullParameter()
+        {
+            var template = new HtmlDocument();
+            template.LoadHtml("<div>Your name is <param name=\"name\"/>.</div>");
+
+            
+            var result = HtmlParameterReplacement.Replace(template, new Dictionary<string, object>()  {
+                { "name", null }
+            });
+
+            Assert.Equal("<div>Your name is <span></span>.</div>", result.DocumentNode.OuterHtml);
+        }
+
+
     }
 }

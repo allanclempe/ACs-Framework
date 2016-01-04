@@ -24,6 +24,11 @@ namespace ACs.NHibernate
             _factory.Session.SaveOrUpdate(entity);
         }
 
+        public virtual void SaveAndFlush(T entity)
+        {
+            _factory.Session.SaveOrUpdate(entity);
+            _factory.Session.Flush();
+        }
 
     }
 }

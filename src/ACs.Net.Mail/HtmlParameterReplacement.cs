@@ -39,6 +39,9 @@ namespace ACs.Net.Mail
 
         private static HtmlDocument Process(HtmlDocument document, string key, object value)
         {
+
+            if (value == null) value = "";
+
             var toTag = HtmlNode.CreateNode("<span></span>");
 
             if (value.GetType() == typeof(Uri))

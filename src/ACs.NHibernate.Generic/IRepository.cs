@@ -5,5 +5,6 @@ namespace ACs.NHibernate.Generic
     {
         T GetById(int id);
         void Save(T entity);
+        void SaveAndFlush(T entity);
     }
 }

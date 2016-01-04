@@ -1,5 +1,5 @@
-﻿{
-  "version": "1.0.0-*",
+{
+  "version": "1.0.1-*",
   "description": "ACs.Net.Mail Class Library",
   "authors": [ "Allan Clempe" ],
   "tags": [ "" ],
@@ -7,11 +7,14 @@
   "licenseUrl": "",
 
   "dependencies": {
+    "FluentMigrator": "1.6.1",
     "HtmlAgilityPack": "1.4.9",
     "Microsoft.Extensions.Logging": "1.0.0-rc1-final"
   },
   "frameworks": {
     "net451": {
+      "dependencies": {
+      }
     }
 
   }
