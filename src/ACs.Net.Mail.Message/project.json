@@ -1,0 +1,24 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ACs.Net.Mail.Message Class Library",
+  "authors": [ "Borela" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "dependencies": {
+    "HtmlAgilityPack.NetCore": "1.4.9.2"
+  },
+  "frameworks": {
+    "net451": { },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",        
+        "System.Reflection": "4.1.0-beta-23516"
+      }
+    }
+  }
+}

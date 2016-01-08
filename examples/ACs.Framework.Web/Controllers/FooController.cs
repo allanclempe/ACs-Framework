@@ -7,6 +7,7 @@ using ACs.Framework.Web.Data;
 using ACs.Framework.Web.Core;
 using ACs.NHibernate.Next;
 using ACs.Net.Mail;
+using ACs.Net.Mail.Message;
 
 namespace ACs.Framework.Web.Controllers
 {

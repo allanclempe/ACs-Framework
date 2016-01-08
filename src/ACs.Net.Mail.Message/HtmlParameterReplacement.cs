@@ -1,30 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
-namespace ACs.Net.Mail
+using System.Reflection;
+
+namespace ACs.Net.Mail.Message
 {
     public static class HtmlParameterReplacement
     {
         public static HtmlDocument Replace(HtmlDocument document, object parameters)
         {
             var dictionary = new Dictionary<string, object>();
-            foreach (var propertyInfo in parameters.GetType().GetProperties())
-                if (propertyInfo.CanRead && propertyInfo.GetIndexParameters().Length == 0)
-                    dictionary[propertyInfo.Name] = propertyInfo.GetValue(parameters, null);
+            foreach (var propertyInfo in parameters.GetType().GetTypeInfo().DeclaredProperties.Where(propertyInfo => propertyInfo.CanRead && propertyInfo.GetIndexParameters().Length == 0))
+                dictionary[propertyInfo.Name] = propertyInfo.GetValue(parameters, null);
 
             return Replace(document, dictionary);
         }
 
         public static HtmlDocument Replace(HtmlDocument document, IDictionary<string, object> parameters)
         {
-            foreach (var replace in parameters)
-            {
-                document = Process(document, replace.Key, replace.Value);
-            }
-
-            return document;
+            return parameters.Aggregate(document, (current, replace) => Process(current, replace.Key, replace.Value));
         }
 
         public static HtmlDocument Replace(HtmlDocument document, string key, string value)

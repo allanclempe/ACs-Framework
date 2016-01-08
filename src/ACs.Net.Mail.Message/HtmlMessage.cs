@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace ACs.Net.Mail
+namespace ACs.Net.Mail.Message
 {
     public class HtmlMessage: IHtmlMessage
     {    
-        private const string _templateDefault = "<!DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html><head></head><body></body></html>";               
+        private const string TemplateDefault = "<!DOCTYPE html PUBLIC \" -//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html><head></head><body></body></html>";               
         private string _fontFamily = "Verdana";
         private int _fontSize = 11;
 
@@ -57,11 +56,11 @@ namespace ACs.Net.Mail
             var bodyNode = Html.DocumentNode.SelectNodes("//body")
                 .First();
 
-            if (bodyNode.Attributes.Any(x => x.Name.Equals("style", StringComparison.InvariantCultureIgnoreCase))){
+            if (bodyNode.Attributes.Any(x => x.Name.Equals("style", StringComparison.CurrentCultureIgnoreCase))){
                 bodyNode.Attributes.Remove("style");
             }
 
-            bodyNode.Attributes.Add("style", string.Format("font-family:'{0}';font-size:{1}px", fontName, fontSize));
+            bodyNode.Attributes.Add("style", $"font-family:'{fontName}';font-size:{fontSize}px");
 
             return this;
         }
@@ -91,7 +90,7 @@ namespace ACs.Net.Mail
             }
 
             var result = new HtmlDocument();
-            result.LoadHtml(_templateDefault);
+            result.LoadHtml(TemplateDefault);
             result.DocumentNode
                 .SelectSingleNode("//body")
                 .AppendChild(body);

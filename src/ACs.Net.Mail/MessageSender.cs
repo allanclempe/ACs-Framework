@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Net;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using ACs.Net.Mail.Message;
 
 namespace ACs.Net.Mail
 {
@@ -74,8 +75,7 @@ namespace ACs.Net.Mail
             }
             catch (Exception e)
             {
-                if (_logger != null)
-                    _logger.LogError("Message cannot be delivered.", e);
+                _logger?.LogError("Message cannot be delivered.", e);
 
                 return Task.FromResult(false);
             }

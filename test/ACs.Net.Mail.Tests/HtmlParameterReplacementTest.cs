@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using ACs.Net.Mail;
+using ACs.Net.Mail.Message;
 using HtmlAgilityPack;
 
 namespace ACs.Net.Mail.Tests

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ACs.Net.Mail
+namespace ACs.Net.Mail.Message
 {
     public interface IHtmlMessage
     {
