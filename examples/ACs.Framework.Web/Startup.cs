@@ -76,7 +76,7 @@ namespace ACs.Framework.Web
             app
                 .UseIISPlatformHandler()
                 .UseMvc()
-                .UseAngularServer("wwwroot", "/index.html")
+                .UseAngularServer("/index.html")
                 .UseStaticContext();
         }
 

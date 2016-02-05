@@ -15,17 +15,13 @@ namespace ACs.Angular.Next
 {
     public static class AngularServerExtension
     {
-        public static IApplicationBuilder UseAngularServer(this IApplicationBuilder builder, string rootPath, string entryPath)
+        public static IApplicationBuilder UseAngularServer(this IApplicationBuilder builder, string entryPath)
         {
+
             var logger  = (ILoggerFactory)builder.ApplicationServices.GetService(typeof(ILoggerFactory));
             var env = (IHostingEnvironment)builder.ApplicationServices.GetService(typeof(IHostingEnvironment));
-
-            var dir = Directory.GetCurrentDirectory();
-
-            if (dir.IndexOf(rootPath, StringComparison.CurrentCultureIgnoreCase) == -1)
-                dir = Path.Combine(dir, rootPath);
-
-            var fileProvider = new PhysicalFileProvider(dir);
+            
+            var fileProvider = new PhysicalFileProvider(env.WebRootPath);
 
             var options = new AngularServerOptions {
                 FileServerOptions = new FileServerOptions()
