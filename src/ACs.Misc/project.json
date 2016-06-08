@@ -1,11 +1,11 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.1-*",
   "description": "ACs.Misc Class Library",
   "authors": [ "Allan Clempe" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-
+ 
   "frameworks": {
     "net451": { },
     "dotnet5.4": {

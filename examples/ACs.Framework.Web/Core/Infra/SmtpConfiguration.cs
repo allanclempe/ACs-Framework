@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ACs.Net.Mail;
+﻿using ACs.Net.Mail;
 
-namespace ACs.Framework.Web.Infra
+namespace ACs.Framework.Web.Core.Infra
 {
     public class SmtpConfiguration : ISmtpConfiguration
     {

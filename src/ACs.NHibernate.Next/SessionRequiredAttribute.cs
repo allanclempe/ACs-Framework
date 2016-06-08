@@ -20,29 +20,34 @@ namespace ACs.NHibernate.Next
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            base.OnActionExecuting(filterContext);
+
             _factory = (IDatabaseFactory)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseFactory));
 
             _request = _factory.BeginRequest(OpenTransaction);
+            
+             
         }
 
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        public override void OnResultExecuted(ResultExecutedContext context)
         {
-            if (filterContext.Exception != null || (ModelStateErrorChecker && filterContext.ModelState.ErrorCount > 0))
+            base.OnResultExecuted(context);
+
+            if (context.HttpContext.Response.StatusCode != 200 || context.Exception != null || (ModelStateErrorChecker && context.ModelState.ErrorCount > 0))
             {
-                _request.Finish(true); 
+                _request.Finish(true);
                 return;
             }
 
             _request.Finish();
+
         }
 
         public void OnException(ExceptionContext context)
         {
+            _request?.Finish(true);
 
-            if (_request != null)
-                _request.Finish(true);
-    
-            throw context.Exception;
+          //  throw context.Exception;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ACs.Angular.Next
 
         public async Task Invoke(HttpContext context)
         {
-            // try to resolve the request with default static file middleware
+            // try to resolve the request with default static file middlewarex
             await _innerMiddleware.Invoke(context);
             Console.WriteLine(context.Request.Path + ": " + context.Response.StatusCode);
             // route to root path if the status code is 404

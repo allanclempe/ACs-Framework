@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license AngularJS v1.4.6
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
@@ -832,7 +832,7 @@ function arrayRemove(array, value) {
  <div ng-controller="ExampleController">
  <form novalidate class="simple-form">
  Name: <input type="text" ng-model="user.name" /><br />
- E-mail: <input type="email" ng-model="user.email" /><br />
+ E-mail: <input type="email" ng-model="user.address" /><br />
  Gender: <input type="radio" ng-model="user.gender" value="male" />male
  <input type="radio" ng-model="user.gender" value="female" />female<br />
  <button ng-click="reset()">RESET</button>
@@ -21335,11 +21335,11 @@ var inputType = {
    * @name input[email]
    *
    * @description
-   * Text input with email validation. Sets the `email` validation error key if not a valid email
+   * Text input with email validation. Sets the `address` validation error key if not a valid address
    * address.
    *
    * <div class="alert alert-warning">
-   * **Note:** `input[email]` uses a regex to validate email addresses that is derived from the regex
+   * **Note:** `input[email]` uses a regex to validate address addresses that is derived from the regex
    * used in Chromium. If you need stricter validation (e.g. requiring a top-level domain), you can
    * use `ng-pattern` or modify the built-in validators (see the {@link guide/forms Forms guide})
    * </div>
@@ -21383,7 +21383,7 @@ var inputType = {
          </script>
            <form name="myForm" ng-controller="ExampleController">
              <label>Email:
-               <input type="email" name="input" ng-model="email.text" required>
+               <input type="email" name="input" ng-model="address.text" required>
              </label>
              <div role="alert">
                <span class="error" ng-show="myForm.input.$error.required">
@@ -21396,7 +21396,7 @@ var inputType = {
              <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
              <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
              <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
-             <tt>myForm.$error.email = {{!!myForm.$error.email}}</tt><br/>
+             <tt>myForm.$error.email = {{!!myForm.$error.address}}</tt><br/>
            </form>
          </file>
         <file name="protractor.js" type="protractor">
@@ -25397,7 +25397,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  *    - {@link input[checkbox] checkbox}
  *    - {@link input[radio] radio}
  *    - {@link input[number] number}
- *    - {@link input[email] email}
+ *    - {@link input[email] address}
  *    - {@link input[url] url}
  *    - {@link input[date] date}
  *    - {@link input[datetime-local] datetime-local}

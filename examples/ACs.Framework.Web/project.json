@@ -17,6 +17,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
     "Microsoft.Extensions.SecretManager": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.JwtBearer": "1.0.0-rc1-final",
     "NHibernate": "4.0.4.4000",
     "FluentNHibernate": "2.0.3",
     "ACs.NHibernate": "",
@@ -24,19 +26,30 @@
     "ACs.NHibernate.Generic": "",
     "ACs.Angular.Next": "",
     "ACs.Net.Mail": "",
+    "ACs.Security": "",
+    "ACs.Security.Jwt": "",
+    "ACs.Misc": "",
+    "ACs.ErrorHandler.Next": "",
     "FluentMigrator": "1.6.1",
-    "FluentMigrator.Runner.DNX": "1.0.0-*"
+    "FluentMigrator.Runner.DNX": "1.0.0-*",
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204",
+    "Moq": "4.0.10827",
+    "System.IdentityModel.Tokens": "5.0.0-rc1-211161024",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0-rc1-211161024"
   },
 
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5000/tiregauge",
-    "migrate": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true --output migrator.sql",
-    "migrate-down": "FluentMigrator.Runner.DNX --provider sqlserver2008 --connectionString Server=.\\sqlexpress;Database=Foo;Trusted_Connection=True;MultipleActiveResultSets=true --output migrator-down.sql --task migrate:down"
+    "web": "Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5000/",
+    "migrate": "FluentMigrator.Runner.DNX --provider sqlserver2012 --connectionString \"Server=.\\SQLEXPRESS;Database=FrameworkTemplate;Trusted_Connection=True;user id=sa;password=123;\"",
+    "migrate-down": "FluentMigrator.Runner.DNX --provider sqlserver2012 --connectionString \"Server=.\\SQLEXPRESS;Database=FrameworkTemplate;Trusted_Connection=True;user id=sa;password=123;\" --task migrate:down",
+    "test": "xunit.runner.dnx"
   },
 
   "frameworks": {
-    "dnx451": { }
+    "dnx451": {
+    }
   },
 
   "exclude": [

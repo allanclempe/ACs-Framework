@@ -29,6 +29,11 @@ namespace ACs.Net.Mail
             return SendEmailAsync(body.MailTo, body.Subject, body.ToHtml());
         }
 
+        public Task<bool> SendEmailAsync(string email, IHtmlMessage body)
+        {
+            return SendEmailAsync(email, body.Subject, body.ToHtml());
+        }
+
         public virtual Task<bool> SendEmailAsync(string email, string subject, IHtmlMessage body)
         {
             return SendEmailAsync(email, subject, body.ToHtml());

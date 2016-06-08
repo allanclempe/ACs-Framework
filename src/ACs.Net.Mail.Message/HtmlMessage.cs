@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using HtmlAgilityPack;
 
@@ -15,13 +16,26 @@ namespace ACs.Net.Mail.Message
         public string Subject { get; private set; }
         public HtmlDocument Html { get; private set; }
         public IDictionary<string, object> Params {get; private set;}
-        
-        public HtmlMessage(string html)
-        {
-            if (string.IsNullOrEmpty(html)) throw new ArgumentException(nameof(html));
 
+        private HtmlMessage()
+        {
             Params = new Dictionary<string, object>();
             Html = new HtmlDocument();
+        }
+
+        public HtmlMessage(StreamReader stream)
+            :this()
+        {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+
+            LoadHtml(stream.ReadToEnd());
+
+        }
+
+        public HtmlMessage(string html)
+            :this()
+        {
+            if (string.IsNullOrEmpty(html)) throw new ArgumentException(nameof(html));
 
             LoadHtml(html);
             

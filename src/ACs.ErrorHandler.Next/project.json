@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ACs.ErrorHandler.Next Class Library",
+  "authors": [ "Allan Clempe" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "dependencies": {
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+    "Newtonsoft.Json": "8.0.3" 
+  },
+  "frameworks": {
+    "net451": {
+    }
+  }
+}
