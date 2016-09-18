@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,5 +15,7 @@ namespace ACs.Security.Jwt
         string Audience { get; }
         string Issuer { get; }
         string GetToken(DateTime? notBefore = null, DateTime? expiress = null, params Claim[] claims);
+	    IList<Claim> GetClaimsFromToken(string token);
+
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Linq;
 
 namespace ACs.Security.Jwt
 {
@@ -67,5 +69,15 @@ namespace ACs.Security.Jwt
             myRSA.ExportParameters(true);
             return myRSA.ToXmlString(includePrivateParameters: true);
         }
-    }
+
+		public IList<Claim> GetClaimsFromToken(string token)
+		{
+			var securityToken = Handler.ReadToken(token) as JwtSecurityToken;
+			if (securityToken == null)
+				return new List<Claim>();
+
+			return securityToken.Claims.ToList();
+		}
+
+	}
 }
