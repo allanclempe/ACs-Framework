@@ -20,8 +20,8 @@ namespace ACs.NHibernate
         {
             _sessionFactory = sessionFactory;
         }
-
-        public virtual IDatabaseRequest BeginRequest(bool beginTransaction = true)
+	    
+		public virtual IDatabaseRequest BeginRequest(bool beginTransaction = true, TransactionIsolationLevel? isolationLevel = null)
         {
             ISession session = Session;
 
@@ -32,7 +32,7 @@ namespace ACs.NHibernate
             }
 
             return new DatabaseRequest(session)
-                .Open(beginTransaction);
+                .Open(beginTransaction, isolationLevel);
         }
 
         public virtual void End()

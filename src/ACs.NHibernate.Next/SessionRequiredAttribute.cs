@@ -11,12 +11,20 @@ namespace ACs.NHibernate.Next
         public bool ModelStateErrorChecker { get; set; }
         private IDatabaseRequest _request;
         private IDatabaseFactory _factory;
+	    public TransactionIsolationLevel? IsolationLevel;
 
-        public SessionRequiredAttribute()
+	    public SessionRequiredAttribute(TransactionIsolationLevel isolationLevel)
+			:this()
+	    {
+			IsolationLevel = isolationLevel;
+			
+		}
+
+	    public SessionRequiredAttribute()
         {
-            OpenTransaction = true;
-            ModelStateErrorChecker = true;
-        }
+			OpenTransaction = true;
+			ModelStateErrorChecker = true;
+		}
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -24,7 +32,7 @@ namespace ACs.NHibernate.Next
 
             _factory = (IDatabaseFactory)filterContext.HttpContext.ApplicationServices.GetService(typeof (IDatabaseFactory));
 
-            _request = _factory.BeginRequest(OpenTransaction);
+            _request = _factory.BeginRequest(OpenTransaction, IsolationLevel);
             
              
         }
@@ -39,7 +47,7 @@ namespace ACs.NHibernate.Next
                 return;
             }
 
-            _request.Finish();
+           _request.Finish();
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using NHibernate;
 using NHibernate.Context;
 using ACs.NHibernate.Generic;
@@ -14,20 +15,47 @@ namespace ACs.NHibernate
             _session = session;
         }
 
-        internal virtual IDatabaseRequest Open(bool beginTransaction = true)
+        internal virtual IDatabaseRequest Open(bool beginTransaction = true, TransactionIsolationLevel? isolationLevel = null)
         {
-            if (beginTransaction) _session.BeginTransaction();
+	        if (beginTransaction)
+	        {
+		        if (!isolationLevel.HasValue)
+		        {
+			        _session.BeginTransaction();
+			        return this;
+		        }
+
+		        _session.BeginTransaction(ParseIsolationLevel(isolationLevel.Value));
+	        }
+
             
             return this;
 
         }
 
-        public void BeginTransaction()
+	    public void BeginTransaction()
+	    {
+			_session.Transaction.Begin();
+		}
+
+        public void BeginTransaction(TransactionIsolationLevel isolationLevel)
         {
-            _session.Transaction.Begin();
+			_session.Transaction.Begin(ParseIsolationLevel(isolationLevel));
         }
 
-        public virtual void CommitTransaction()
+	    private IsolationLevel ParseIsolationLevel(TransactionIsolationLevel isolationLevel)
+	    {
+	        IsolationLevel iso;
+			if (Enum.TryParse(isolationLevel.ToString(), out iso))
+			{
+				return iso;
+			}
+
+			throw new Exception("IsolationLevel not found.");
+
+		}
+
+		public virtual void CommitTransaction()
         {
             _session.Transaction.Commit();
         }
