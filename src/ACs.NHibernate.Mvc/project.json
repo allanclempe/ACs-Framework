@@ -17,8 +17,8 @@
     }
   },
   "dependencies": {
-    "ACs.NHibernate": "",
-    "ACs.NHibernate.Generic": "1.0.0-*",
+    "ACs.NHibernate": "1.0.10",
+    "ACs.NHibernate.Generic": "1.0.6",
     "Microsoft.AspNet.Mvc": "5.2.3",
     "Unity": "4.0.1"
   }

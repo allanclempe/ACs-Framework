@@ -7,13 +7,13 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "ACs.NHibernate.Generic": "",
+    "ACs.NHibernate.Generic": "1.0.6",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
   },
   "frameworks": {
     "net451": {
       "dependencies": {
-        "ACs.NHibernate": ""
+        "ACs.NHibernate": "1.0.10"
       }
     }
   }
