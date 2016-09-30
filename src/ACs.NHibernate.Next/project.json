@@ -1,19 +1,19 @@
 ﻿{
-  "version": "1.0.8-*",
+  "version": "1.0.9-*",
   "description": "ACs.NHibernate.Next Class Library",
   "authors": [ "Allan Clempe" ],
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
 
-  "dependencies": {
-    "ACs.NHibernate.Generic": "1.0.6",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
-  },
+	"dependencies": {
+		"ACs.NHibernate": "1.0.11-*",
+		"ACs.NHibernate.Generic": "1.0.7-*",
+		"Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
+	},
   "frameworks": {
     "net451": {
       "dependencies": {
-        "ACs.NHibernate": "1.0.10"
       }
     }
   }
